@@ -31,14 +31,18 @@ public class FindProductController extends HttpServlet {
         String url = ERROR;
         try {
             String searchValue = request.getParameter("searchValue");
+            if (searchValue == null) {
+                searchValue = "";
+            }
             ProductDAO dao = new ProductDAO();
             List<ProductDTO> list = dao.searchProduct(searchValue);
+            HttpSession session = request.getSession();
             if (list != null) {
-                HttpSession session = request.getSession();
                 session.setAttribute("LIST_PRODUCT_USER", list);
                 request.setAttribute("SEARCH_VALUE_USER", searchValue);
                 url = SUCCESS;
             }
+            session.setAttribute("SEARCH_VALUE", searchValue);
         } catch (Exception e) {
             log("Error at LoginController: " + e.toString());
         } finally {

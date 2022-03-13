@@ -22,6 +22,7 @@ public class UserDTO {
     private String phone;
     private String email;
     private boolean status;
+    private String loginRole;
 
     public UserDTO(String userID, String fullName, String roleID, String password, String address, Date birthday, String phone, String email, boolean status) {
         this.userID = userID;
@@ -109,6 +110,13 @@ public class UserDTO {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
-    
+
+    public String getLoginRole() {
+        return loginRole;
+    }
+
+    public void setLoginRole(String loginRole) {
+        this.loginRole = loginRole;
+    }
+
 }

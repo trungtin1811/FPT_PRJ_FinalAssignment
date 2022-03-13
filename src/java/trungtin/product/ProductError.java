@@ -11,6 +11,7 @@ package trungtin.product;
  */
 public class ProductError {
 
+    private String productID;
     private String productIDError;
     private String productNameError;
     private String productImageError;
@@ -20,6 +21,22 @@ public class ProductError {
     private String productUsingDateError;
 
     public ProductError(String productIDError, String productNameError, String productImageError, String productQuantityError, String productCategoryIDError, String productImportDateError, String productUsingDateError) {
+        this.productIDError = productIDError;
+        this.productNameError = productNameError;
+        this.productImageError = productImageError;
+        this.productQuantityError = productQuantityError;
+        this.productCategoryIDError = productCategoryIDError;
+        this.productImportDateError = productImportDateError;
+        this.productUsingDateError = productUsingDateError;
+    }
+
+    public ProductError(String productID, String productQuantityError) {
+        this.productID = productID;
+        this.productQuantityError = productQuantityError;
+    }
+
+    public ProductError(String productID, String productIDError, String productNameError, String productImageError, String productQuantityError, String productCategoryIDError, String productImportDateError, String productUsingDateError) {
+        this.productID = productID;
         this.productIDError = productIDError;
         this.productNameError = productNameError;
         this.productImageError = productImageError;
@@ -45,6 +62,14 @@ public class ProductError {
 
     public void setProductIDError(String productIDError) {
         this.productIDError = productIDError;
+    }
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
 
     public String getProductNameError() {

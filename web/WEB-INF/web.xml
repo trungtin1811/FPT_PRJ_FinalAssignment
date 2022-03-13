@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>AuthenFilter</filter-name>
+        <filter-class>trungtin.filters.AuthenFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>MainController</servlet-name>
         <servlet-class>trungtin.controller.MainController</servlet-class>
@@ -46,7 +54,51 @@
     </servlet>
     <servlet>
         <servlet-name>BuyController</servlet-name>
-        <servlet-class>trungtin.controller.BuyController</servlet-class>
+        <servlet-class>trungtin.controller.AddToCartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductDTO</servlet-name>
+        <servlet-class>trungtin.product.ProductDTO</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddToCartController</servlet-name>
+        <servlet-class>trungtin.controller.AddToCartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateCartController</servlet-name>
+        <servlet-class>trungtin.controller.UpdateCartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveController</servlet-name>
+        <servlet-class>trungtin.controller.RemoveController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckOutController</servlet-name>
+        <servlet-class>trungtin.controller.CheckOutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StartUpController</servlet-name>
+        <servlet-class>trungtin.controller.StartUpController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateUserController</servlet-name>
+        <servlet-class>trungtin.controller.UpdateUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProductController</servlet-name>
+        <servlet-class>trungtin.controller.UpdateProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OpenUpdateProductPageController</servlet-name>
+        <servlet-class>trungtin.controller.OpenUpdateProductPageController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OpenUpdateProductController</servlet-name>
+        <servlet-class>trungtin.controller.OpenUpdateProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginGGController</servlet-name>
+        <servlet-class>trungtin.api.LoginGGController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -96,12 +148,62 @@
         <servlet-name>BuyController</servlet-name>
         <url-pattern>/BuyController</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductDTO</servlet-name>
+        <url-pattern>/ProductDTO</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToCartController</servlet-name>
+        <url-pattern>/AddToCartController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateCartController</servlet-name>
+        <url-pattern>/UpdateCartController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveController</servlet-name>
+        <url-pattern>/RemoveController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckOutController</servlet-name>
+        <url-pattern>/CheckOutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StartUpController</servlet-name>
+        <url-pattern>/StartUpController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateUserController</servlet-name>
+        <url-pattern>/UpdateUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProductController</servlet-name>
+        <url-pattern>/UpdateProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OpenUpdateProductPageController</servlet-name>
+        <url-pattern>/OpenUpdateProductPageController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OpenUpdateProductController</servlet-name>
+        <url-pattern>/OpenUpdateProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginGGController</servlet-name>
+        <url-pattern>/LoginGGController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>shoppingPage.jsp</welcome-file>
+        <welcome-file>FindProductController</welcome-file>
     </welcome-file-list>
+    <resource-ref>
+        <res-ref-name>DBCon</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
 </web-app>

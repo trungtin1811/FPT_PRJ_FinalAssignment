@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import trungtin.product.ProductDAO;
 import trungtin.product.ProductDTO;
+import trungtin.product.ProductError;
 import trungtin.user.UserDAO;
 import trungtin.user.UserDTO;
 
@@ -32,7 +33,7 @@ import trungtin.user.UserDTO;
 public class AddProductController extends HttpServlet {
 
     private static final String ERROR = "addProduct.jsp";
-    private static final String SUCCESS = "MainController?searchValue=&btnAction=SearchProduct";
+    private static final String SUCCESS = "addProduct.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -44,27 +45,44 @@ public class AddProductController extends HttpServlet {
             String productName = request.getParameter("productName");
             double price = Double.parseDouble(request.getParameter("price"));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
-                String categoryID = request.getParameter("categoryID");
+            String categoryID = request.getParameter("categoryID");
             Date importDate = new java.sql.Date((formatter.parse(request.getParameter("importDate")).getTime()));
             Date usingDate = new java.sql.Date((formatter.parse(request.getParameter("usingDate")).getTime()));
             Part part = request.getPart("image");
 
-            String realPath = request.getServletContext().getRealPath("/images");
+            String realPath = request.getServletContext().getRealPath("/pictures");
             String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
             if (!Files.exists(Paths.get(realPath))) {
                 Files.createDirectories(Paths.get(realPath));
             }
             part.write(realPath + "/" + fileName);
-            String image = "images/" + fileName;
+            String image = "pictures/" + fileName;
+            boolean checkValidation = true;
 
-//            chưa xong
-            ProductDTO product = new ProductDTO(productID, productName, image, price, quantity, categoryID, importDate, usingDate, true);
+            ProductError productError = new ProductError();
             ProductDAO dao = new ProductDAO();
-            boolean check = dao.addProduct(product);
-            if (check) {
-                url = SUCCESS;
+            boolean checkDuplicate = dao.checkDuplicate(productID);
+            if (checkDuplicate) {
+                productError.setProductIDError("DuplicateProduct ID!!");
+                checkValidation = false;
             }
-
+            if (productID.length() < 2 || productID.length() > 10) {
+                productError.setProductIDError("Product ID length must be in [2;10]!!");
+                checkValidation = false;
+            }
+            if (productName.length() < 2 || productName.length() > 20) {
+                productError.setProductNameError("Full Name length must be in [2;20]!!");
+                checkValidation = false;
+            }
+            request.setAttribute("PRODUCT_ERROR", productError);
+            if (checkValidation) {
+                ProductDTO product = new ProductDTO(productID, productName, image, price, quantity, categoryID, importDate, usingDate, true);
+                boolean check = dao.addProduct(product);
+                if (check) {
+                    url = SUCCESS;
+                    request.setAttribute("MESSAGE", "Add Successfully!!");
+                }
+            }
         } catch (Exception e) {
             log("Error at LoginController: " + e.toString());
         } finally {

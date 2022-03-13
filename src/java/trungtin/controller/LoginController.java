@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import trungtin.product.ProductDAO;
-import trungtin.product.ProductDTO;
 import trungtin.user.UserDAO;
 import trungtin.user.UserDTO;
 
@@ -27,9 +26,9 @@ public class LoginController extends HttpServlet {
 
     private static final String ERROR = "login.jsp";
     private static final String AD = "AD";
-    private static final String ADMIN_PAGE = "MainController?searchValue=&btnAction=SearchProduct";
+    private static final String ADMIN_PAGE = "MainController?btnAction=SearchProduct&searchValue=";
     private static final String US = "US";
-    private static final String USER_PAGE = "shoppingPage.jsp";
+    private static final String USER_PAGE = "MainController?btnAction=FindProduct&searchValue=";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -62,6 +62,14 @@ public class RegisterController extends HttpServlet {
                 userError.setConfirmError("2 password must equal !!");
                 checkValidation = false;
             }
+            if (!phone.matches("^[0]\\d{9}")) {
+                userError.setPhoneError("You must input correct Phone Number !!");
+                checkValidation = false;
+            }
+            if (!email.matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
+                userError.setEmailError("You must input correct Email !!");
+                checkValidation = false;
+            }
             request.setAttribute("USER_ERROR", userError);
             if (checkValidation) {
                 UserDTO user = new UserDTO(userID, fullName, "US", password, address, birthday, phone, email, true);

@@ -32,13 +32,16 @@ public class SearchProductController extends HttpServlet {
         String url = ERROR;
         try {
             String searchValue = request.getParameter("searchValue");
+            if (searchValue == null) {
+                searchValue = "";
+            }
             ProductDAO dao = new ProductDAO();
             List<ProductDTO> list = dao.searchProduct(searchValue);
             if (list != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("LIST_PRODUCT", list);
-                request.setAttribute("SEARCH_VALUE", searchValue);
-                url=SUCCESS;
+                session.setAttribute("SEARCH_VALUE", searchValue);
+                url = SUCCESS;
             }
         } catch (Exception e) {
             log("Error at LoginController: " + e.toString());

@@ -132,5 +132,4 @@ public class ProductDTO {
     public void setCategoryName(String categoryName) {
         this.categoryName = this.categoryName;
     }
-
 }

@@ -7,74 +7,72 @@
 <%@page import="trungtin.user.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %> 
 
 <!DOCTYPE html>
-<html>
+<html lang="zxx">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Page</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="copyright" content="" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Eshop - Admin</title>
+        <link rel="icon" type="image/png" href="images/favicon.png" />
+        <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="table.css">
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/jquery.fancybox.min.css" />
+        <link rel="stylesheet" href="css/themify-icons.css" />
+        <link rel="stylesheet" href="style.css" />
     </head>
-    <body>
-        <c:set var="loginUser" value="${sessionScope.LOGIN_USER}"/>
-        <c:if test="${empty loginUser || !sessionScope.LOGIN_USER.getRoleID().equals('AD')}">
-            <c:redirect url="login.jsp"/>
-        </c:if>
-        <p>Welcome ${loginUser.fullName}</p>
-        <form action="MainController">
-            <input type="submit" name="btnAction" value="Logout"/>
-        </form>
-        <h2>Your information</h2></br>
-<!--        User ID: ${sessionScope.LOGIN_USER.getUserID()} </br>
-        Full Name: ${sessionScope.LOGIN_USER.getFullName()}</br>
-        Role ID: ${sessionScope.LOGIN_USER.getRoleID()}</br>
-        Address: ${sessionScope.LOGIN_USER.getAddress()}</br>
-        Birthday: ${sessionScope.LOGIN_USER.getBirthday()}</br>
-        Phone Number: ${sessionScope.LOGIN_USER.getPhone()}</br>
-        Email: ${sessionScope.LOGIN_USER.getEmail()}</br>-->
-        <button><a href="addProduct.jsp">Add product</a></button>
-        <form action="MainController">
-            <input type="text" value="${requestScope.SEARCH_VALUE}" placeholder="Search product.." name="searchValue"/>
-            <input type="hidden" value="managementPage" name="role"/>
-            <input type="submit" value="SearchProduct" name="btnAction"/>
-        </form>
+    <body class="js">
         <c:set var="productList" value="${sessionScope.LIST_PRODUCT}"/>
-        <c:if test="${not empty productList}">
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Image</th>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Category</th>
-                        <th>Import Date</th>
-                        <th>Using Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="product" items="${productList}" varStatus="counter">
-                        <tr>
-                            <td>${counter.count}</td>
-                            <td><img src="${product.image}" width="160px"/></td>
-                            <td>${product.productName}</td>
-                            <td>${product.price}</td>
-                            <td>${product.quantity}</td>
-                            <td>${product.categoryName}</td>
-                            <td>${product.importDate}</td>
-                            <td>${product.usingDate}</td>
-                            <td><a href="MainController?btnAction=DeleteProduct&productID=${product.productID}&searchValue=${requestScope.SEARCH_VALUE}">Delete</a></td>
-                        </tr>
-                    </c:forEach>
-
-
-                </tbody>
-            </table>
-
-        </c:if>
-        <c:if test="${empty productList}">
-            <h2>No result</h2>
-        </c:if>
+        <%@include file="header.jsp" %>
+        <div class="products container p-0">
+            <button class="btn add-btn" style="background-color: #cf801f;" ><a href="addProduct.jsp" style="color: white">Add product</a></button>
+            <section class="product-list">
+                <c:if test="${not empty productList}">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Import Date</th>
+                                <th scope="col">Expiry Date</th>
+                                <th scope="col">In Stock</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="product" items="${productList}" varStatus="counter">
+                                <tr>
+                                    <th scope="row">${counter.count}</th>
+                                    <td class="product-img"><img src="${product.image}" alt=""></td>
+                                    <td>${product.productName}</td>
+                                    <td><fmt:formatNumber type="currency" value="${product.price}" /></td>
+                                    <td>${product.categoryName}</td>
+                                    <td><fmt:formatDate type="date" dateStyle="short" timeStyle="short"  value="${product.importDate}" /> </td>
+                                    <td><fmt:formatDate type="date" dateStyle="short" timeStyle="short"  value="${product.usingDate}" /></td> 
+                                    <td>${product.quantity > 0 ? product.quantity : "Out of stock"}</td>
+                                    <td class="action-col">
+                                        <button><a href="MainController?btnAction=DeleteProduct&productID=${product.productID}&searchValue=${requestScope.SEARCH_VALUE}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></button>
+                                        <button><a href="MainController?btnAction=OpenUpdatePage&productID=${product.productID}&searchValue=${requestScope.SEARCH_VALUE}"><i class="fa fa-pencil" aria-hidden="true"></i></a></button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
+                <c:if test="${empty productList}">
+                    <h2>No result</h2>
+                </c:if>
+            </section>
+        </div>
     </body>
+
 </html>

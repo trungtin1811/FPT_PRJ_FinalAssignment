@@ -35,27 +35,29 @@ public class MainController extends HttpServlet {
     private static final String FIND_PRODUCT_CONTROLLER = "FindProductController";
     private static final String SEE_DETAIL = "SeeDetail";
     private static final String SEE_DETAIL_CONTROLLER = "SeeDetailController";
-    private static final String BUY_PRODUCT = "Buy";
-    private static final String BUY_PRODUCT_CONTROLLER = "BuyController";
-
-//    private static final String SEARCH = "Search";
-//    private static final String SEARCH_CONTROLLER = "SearchController";
+    private static final String ADD_TO_CART = "AddToCart";
+    private static final String ADD_TO_CART_CONTROLLER = "AddToCartController";
+    private static final String MORE = "More";
+    private static final String LESS = "Less";
+    private static final String UPDATE_CART_CONTROLLER = "UpdateCartController";
+    private static final String OPEN_UPDATE_PAGE = "OpenUpdatePage";
+    private static final String OPEN_UPDATE_PAGE_CONTROLLER = "OpenUpdateProductController";
 //    private static final String DELETE = "Delete";
 //    private static final String DELETE_CONTROLLER = "DeleteController";
 //    private static final String UPDATE = "Update";
 //    private static final String UPDATE_CONTROLLER = "UpdateController";
     private static final String LOGOUT = "Logout";
     private static final String LOGOUT_CONTROLLER = "LogoutController";
-//    private static final String ADD = "Add";
-//    private static final String ADD_CONTROLLER = "AddController";
+    private static final String CHECK_OUT = "CheckOut";
+    private static final String CHECK_OUT_CONTROLLER = "CheckOutController";
+    private static final String UPDATE_USER = "UpdateUser";
+    private static final String UPDATE_USER_CONTROLLER = "UpdateUserController";
+    private static final String UPDATE_PRODUCT = "UpdateProduct";
+    private static final String UPDATE_PRODUCT_CONTROLLER = "UpdateProductController";
 //    private static final String VIEW = "View";
 //    private static final String VIEW_PAGE = "viewCart.jsp";
-//    private static final String REMOVE = "Remove";
-//    private static final String REMOVE_CONTROLLER = "RemoveController";
-//    private static final String EDIT = "Edit";
-//    private static final String EDIT_CONTROLLER = "EditController";
-//    private static final String CREATE = "Create";
-//    private static final String CREATE_CONTROLLER = "CreateController";
+    private static final String REMOVE = "Remove";
+    private static final String REMOVE_CONTROLLER = "RemoveController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -83,8 +85,20 @@ public class MainController extends HttpServlet {
                 url = FIND_PRODUCT_CONTROLLER;
             } else if (SEE_DETAIL.equals(action)) {
                 url = SEE_DETAIL_CONTROLLER;
-            } else if (BUY_PRODUCT.equals(action)) {
-                url = BUY_PRODUCT_CONTROLLER;
+            } else if (ADD_TO_CART.equals(action)) {
+                url = ADD_TO_CART_CONTROLLER;
+            } else if (MORE.equals(action) || LESS.equals(action)) {
+                url = UPDATE_CART_CONTROLLER;
+            } else if (REMOVE.equals(action)) {
+                url = REMOVE_CONTROLLER;
+            } else if (CHECK_OUT.equals(action)) {
+                url = CHECK_OUT_CONTROLLER;
+            } else if (UPDATE_USER.equals(action)) {
+                url = UPDATE_USER_CONTROLLER;
+            } else if (OPEN_UPDATE_PAGE.equals(action)) {
+                url = OPEN_UPDATE_PAGE_CONTROLLER;
+            } else if (UPDATE_PRODUCT.equals(action)) {
+                url = UPDATE_PRODUCT_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

@@ -14,25 +14,44 @@ import trungtin.product.ProductDTO;
  * @author User
  */
 public class Cart {
-    private Map<String, ProductDTO> cart;
 
-    public Cart(Map<String, ProductDTO> cart) {
+    private Map<String, CartDTO> cart;
+    private double total;
+    private int size = 0;
+
+    public Cart(Map<String, CartDTO> cart, double total) {
         this.cart = cart;
+        this.total = total;
     }
 
     public Cart() {
     }
 
-    public Map<String, ProductDTO> getCart() {
+    public double getTotal() {
+        return total;
+    }
+
+    public int getSize() {
+        int result = 0;
+        for (CartDTO value : cart.values()) {
+            result += value.getQuantity();
+        }
+        return result;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public Map<String, CartDTO> getCart() {
         return cart;
     }
 
-    public void setCart(Map<String, ProductDTO> cart) {
+    public void setCart(Map<String, CartDTO> cart) {
         this.cart = cart;
     }
-    
-    
-    public boolean add(ProductDTO product) {
+
+    public boolean add(CartDTO product) {
         boolean check = false;
         if (this.cart == null) {
             this.cart = new HashMap<>();
@@ -57,7 +76,7 @@ public class Cart {
         return check;
     }
 
-    public boolean update(String id, ProductDTO nProduct) {
+    public boolean update(String id, CartDTO nProduct) {
         boolean check = false;
         if (this.cart != null) {
             if (this.cart.containsKey(id)) {
